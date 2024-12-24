@@ -18,6 +18,9 @@ from database.requests.update_tickets_statuses import (
 from database.requests.update_tickets_constants import (
     request_tickets_constants_update
 )
+from database.requests.update_relevant_status import (
+    update_relevant_status
+)
 
 
 init(autoreset=True)
@@ -297,3 +300,10 @@ class AVR:
             )
 
         print()
+
+    def set_relevant_status(self):
+        print(
+            Fore.WHITE + Style.DIM + 'Выставляем актуальный статус заявкам...'
+        )
+        sql_queries(update_relevant_status())
+        print(Fore.GREEN + Style.DIM + 'Готово.')

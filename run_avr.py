@@ -19,6 +19,7 @@ def run_avr():
     avr.download_new_files()
     if avr.prepare_new_files():
         avr.update_avr_db()
+        avr.set_relevant_status()
 
 
 if __name__ == '__main__':
