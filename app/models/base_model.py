@@ -306,4 +306,4 @@ class AVR:
             Fore.WHITE + Style.DIM + 'Выставляем актуальный статус заявкам...'
         )
         sql_queries(update_relevant_status())
-        print(Fore.GREEN + Style.DIM + 'Готово.')
+        print(Fore.GREEN + Style.DIM + 'Актуальность статусов обновлена.')
