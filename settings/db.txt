@@ -1,0 +1,94 @@
+-- Удаляем старые варианты таблиц
+DROP TABLE IF EXISTS constants;
+DROP TABLE IF EXISTS statuses; 
+DROP TABLE IF EXISTS constant_types; 
+DROP TABLE IF EXISTS tickets; 
+DROP TABLE IF EXISTS users;
+-- Создаем таблицы
+DROP TABLE IF EXISTS users;
+CREATE TABLE users
+(
+user_id SERIAL PRIMARY KEY,
+user_name VARCHAR(32),
+user_login VARCHAR(32) NOT NULL,
+user_password VARCHAR(32) NOT NULL,
+UNIQUE (user_name, user_login)
+);
+SELECT * FROM users;
+DROP TABLE IF EXISTS tickets; 
+CREATE TABLE tickets
+(
+ticket_id SERIAL PRIMARY KEY,
+ticket VARCHAR(32) NOT NULL UNIQUE,
+user_id INTEGER NOT NULL,
+FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+SELECT * FROM tickets;
+DROP TABLE IF EXISTS statuses; 
+CREATE TABLE statuses
+(
+ticket_id INTEGER NOT NULL, 
+status VARCHAR(128) NOT NULL, 
+date_and_time TIMESTAMP,
+UNIQUE (ticket_id, status),
+FOREIGN KEY (ticket_id) REFERENCES tickets(ticket_id)
+);
+SELECT * FROM statuses;
+DROP TABLE IF EXISTS constant_types; 
+CREATE TABLE constant_types
+(
+constant_type_id SERIAL PRIMARY KEY,
+constant_type VARCHAR(128) NOT NULL UNIQUE 
+);
+SELECT * FROM constant_types;
+DROP TABLE IF EXISTS constants;
+CREATE TABLE constants
+(
+ticket_id INTEGER NOT NULL,
+constant_type_id INTEGER NOT NULL,
+constant_value VARCHAR(1024 ) NOT NULL,
+date_and_time TIMESTAMP,
+FOREIGN KEY (ticket_id) REFERENCES tickets(ticket_id),
+FOREIGN KEY (constant_type_id) REFERENCES constant_types(constant_type_id)
+);
+SELECT * FROM constants;
+
+-- Заполняем таблицу constant_types
+SELECT * FROM constant_types;
+
+INSERT INTO constant_types VALUES (1, 'Подразделение');
+INSERT INTO constant_types VALUES (2, 'Заголовок');
+INSERT INTO constant_types VALUES (3, 'Описание');
+
+INSERT INTO constant_types VALUES (4, 'Шифр объекта');
+INSERT INTO constant_types VALUES (5, 'Внутренний шифр');
+INSERT INTO constant_types VALUES (6, 'Номер базовой станции');
+
+INSERT INTO constant_types VALUES (7, 'Оператор связи');
+INSERT INTO constant_types VALUES (8, 'Время возникновения');
+INSERT INTO constant_types VALUES (9, 'Плановое время устранения');
+
+INSERT INTO constant_types VALUES (10, 'Нормативное время регистрации');
+INSERT INTO constant_types VALUES (11, 'Нормативное время локализации');
+INSERT INTO constant_types VALUES (12, 'Нормативное время Устранения АВР');
+
+INSERT INTO constant_types VALUES (13, 'Нормативное время Устранения РВР');
+INSERT INTO constant_types VALUES (14, 'Время регистрации');
+INSERT INTO constant_types VALUES (15, 'Долгота');
+
+INSERT INTO constant_types VALUES (16, 'Широта');
+INSERT INTO constant_types VALUES (17, 'Филиал');
+INSERT INTO constant_types VALUES (18, 'Регион');
+
+INSERT INTO constant_types VALUES (19, 'Адрес объекта');
+INSERT INTO constant_types VALUES (20, 'Подрядчик');
+INSERT INTO constant_types VALUES (21, 'Способ регистрации');
+
+INSERT INTO constant_types VALUES (22, 'Наличие выезда');
+INSERT INTO constant_types VALUES (23, 'Имя файла');
+
+SELECT * FROM constant_types;
+
+-- Заполняем таблицу users
+INSERT INTO users (user_name, user_login, user_password) 
+VALUES ('sapbo@megafon.ru', 'report@newtowers.ru', 'LFk4g0K4v&*Dh8kgx');
